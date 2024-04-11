@@ -25,7 +25,7 @@ public class ConsoleGUI {
 						+  "Max Process Size: " + maxProcSize + " kb\n"
 						+  "Max Process Time: " + maxProcTime + " ms");
 		
-		
+		//new code here
 		
 		scan.close();
 

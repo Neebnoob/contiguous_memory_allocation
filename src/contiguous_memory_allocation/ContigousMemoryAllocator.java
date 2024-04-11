@@ -13,7 +13,26 @@ import java.util.Scanner;
 public class ContigousMemoryAllocator {
 	
 	//variables
-	int size; //max size
-	List<Partition> memoryMap;
+	int size; // max size
+	List<Partition> memoryList; // list of all current partitions
+	Process[] processesArray; // array of processes
+	
+	//constructor
+	public ContigousMemoryAllocator(int size, Process[] processesArray) {
+		this.size = size;
+		this.processesArray = processesArray;
+		memoryList.add(new Partition(0, size));
+	}
+	
+	//toString
+	public String toString() {
+		
+		StringBuilder toReturn = new StringBuilder("| ");
+		
+		for (int i = 0; i < memoryList.size(); i++) {
+			toReturn.append(memoryList.get(i).toString() + " | ");
+		}
+		return toReturn.toString();
+	}
 	
 }
