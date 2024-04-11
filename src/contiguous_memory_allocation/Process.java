@@ -78,4 +78,8 @@ public class Process {
         }
     }
 
+    public String toString() {
+        return String.format(this.getName() + " [ " + this.getTimeRemaining() + " ] " + " ( " + this.getSize()) + " ) ";
+    }
+
 }
