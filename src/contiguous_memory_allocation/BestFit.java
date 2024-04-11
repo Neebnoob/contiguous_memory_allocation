@@ -7,13 +7,12 @@ public class BestFit extends ContigousMemoryAllocator{
 		super(size, processesArray);
 	}
 	
-	
-
+	//Comment
 	@Override
 	protected int pickInsert() {
 		int index = -1;
 		int procSize = processesArray[currProcessIndex].getSize();
-		int sizeDif = 0;
+		int sizeDif = Integer.MAX_VALUE;
 		for (int i = 0; i < memoryList.size(); i++){
 			Partition part = memoryList.get(i);
 			int partSize = memoryList.get(i).getEnd() - memoryList.get(i).getBase();
