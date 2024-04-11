@@ -31,12 +31,33 @@ public class ConsoleGUI {
 		//new code here
 		processesArray = Process.generateProcessArray(numProcesses, maxProcSize, maxProcTime);
 		
+		//Print a table of all process data
+		for (int i = 0; i <processesArray.length; i++) {
+			System.out.println(processesArray[i].toString());
+		}
+		
+		
 		FirstFit firstFit = new FirstFit(maxMemorySize - 1, processesArray);
+		while (!firstFit.isDone()) {
+			firstFit.schedule();
+		}
+		firstFit.toString();
+		
+		Process.resetProcessArray(processesArray);
 		
 		BestFit bestFit = new BestFit(maxMemorySize - 1, processesArray);
+		while (!bestFit.isDone()) {
+			bestFit.schedule();
+		}
+		bestFit.toString();
+		
+		Process.resetProcessArray(processesArray);
 		
 		WorstFit worstFit = new WorstFit(maxMemorySize - 1, processesArray);
-		
+		while (!worstFit.isDone()) {
+			worstFit.schedule();
+		}
+		worstFit.toString();
 
 	}
 

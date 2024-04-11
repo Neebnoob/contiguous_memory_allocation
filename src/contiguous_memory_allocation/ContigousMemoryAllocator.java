@@ -1,5 +1,6 @@
 package contiguous_memory_allocation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //Parent class to First-Fit, Best-Fit, Worst-Fit
@@ -18,6 +19,7 @@ public abstract class ContigousMemoryAllocator {
 	public ContigousMemoryAllocator(int size, Process[] processesArray) {
 		this.size = size;
 		this.processesArray = processesArray;
+		this.memoryList = new ArrayList<Partition>();
 		memoryList.add(new Partition(0, size));
 		this.currProcessIndex = 0;
 		this.iterations = 0;
@@ -27,9 +29,10 @@ public abstract class ContigousMemoryAllocator {
 
 	public void schedule() {
 		timeDecrease();
+		System.out.println(toString());
 		Boolean flag = true;
 		//Pick next process loop to keep adding processes while there is space
-		while (flag) {
+		while (flag && currProcessIndex < processesArray.length) {
 			int insertIndex = pickInsert();
 			//check if insert index return -1
 			if (insertIndex == -1) {
@@ -42,7 +45,7 @@ public abstract class ContigousMemoryAllocator {
 				if (processesArray[insertIndex].getSize() == (memoryList.get(insertIndex + 1).getEnd() - memoryList.get(insertIndex + 1).getBase())) {
 					memoryList.remove(insertIndex + 1);
 				} else {
-					memoryList.get(insertIndex + 1).setBase(memoryList.get(insertIndex).getEnd() + 1);
+					memoryList.get(insertIndex + 1).setBase(memoryList.get(insertIndex).getEnd());
 				}
 				//increase process index
 				currProcessIndex++;
@@ -61,14 +64,14 @@ public abstract class ContigousMemoryAllocator {
 		System.out.println("Holes: " + holes + "\n"
 						 + "Avg: " + (holeTotalSize/holes) + " KB\n"
 						 + "Total: " + holeTotalSize + " KB\n"
-						 + "Percent: " + (holeTotalSize/size) + "%\n"
+						 + "Percent: " + (double)Math.round((holeTotalSize/(double)size) * 10000) / 100 + "%\n"
 						 + "Cum Avg: " + cumAvg(holeTotalSize, holes) + "%");
 	}
 	
-	private int cumAvg(int holeTotalSize, int holes) {
+	private double cumAvg(int holeTotalSize, int holes) {
 		holeAvgPercent = ((holeAvgPercent * (iterations - 1)) + holeTotalSize / totalHoles);
 		totalHoles += holes;
-		return holeAvgPercent;
+		return (double)Math.round((holeAvgPercent / (double)size) * 10000) / 100;
 	}
 
 	private void timeDecrease() {
@@ -80,16 +83,25 @@ public abstract class ContigousMemoryAllocator {
 				currPart.getCurrProcess().decrementTimeRemaining();
 			}
 
-			// check if process is at 0 (update it if it is)
+			// check part is occupied
+			// and if process is at 0 (update it if it is)
 			// and if current partition is not the first
 			// and if previous partition is also free
-			if (currPart.isProcessFinished() && i != 0 && memoryList.get(i - 1).getIsFree()) {
+			if (!currPart.getIsFree() && currPart.isProcessFinished() && i != 0 && memoryList.get(i - 1).getIsFree()) {
 				// if so merge the two partition into 1
 				currPart.setBase(memoryList.get(i - 1).getBase());
 				memoryList.remove(i - 1);
-
+				i--;
+			} else if (currPart.getIsFree() && i != 0 && memoryList.get(i - 1).getIsFree()) {
+				currPart.setBase(memoryList.get(i - 1).getBase());
+				memoryList.remove(i - 1);
+				i--;
 			}
 		}
+	}
+	
+	public Boolean isDone() {
+		return (currProcessIndex >= processesArray.length && memoryList.size() == 1);
 	}
 
 	protected abstract int pickInsert();

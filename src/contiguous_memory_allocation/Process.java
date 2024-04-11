@@ -20,8 +20,8 @@ public class Process {
 	public Process(String name, int size, int time) {
 		this.name = name;
 		this.size = size;
-		this.time = time;
-		this.timeRemaining = time;
+		this.time = Math.round(time / 1000) + 1;
+		this.timeRemaining = this.time;
 	}
 	
 	// setters and getters
@@ -72,7 +72,7 @@ public class Process {
     }
     
     // takes the existing array and resets the remaining time value
-    public void resetProcessArray(Process[] processArray) {
+    public static void resetProcessArray(Process[] processArray) {
         for (int i = 0; i < processArray.length; i++) {
             processArray[i].setTimeRemaining(processArray[i].getTime());
         }
@@ -80,7 +80,7 @@ public class Process {
 
     //toString
     public String toString() {
-        return String.format(this.getName() + " [ " + this.getTimeRemaining() + " ] " + " ( " + this.getSize()) + " ) ";
+        return String.format("P" + this.getName() + " [" + this.timeRemaining + "s] (" + this.getSize()) + " KB)";
     }
 
 }

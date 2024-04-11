@@ -21,7 +21,11 @@ public class Partition {
 		this.currProcess = currProcess;
 		this.isFree = false;
 		this.base = base;
-		this.end = currProcess.getSize() + base; //calculates end based on process end
+		if (base == 0) {
+			this.end = currProcess.getSize() + base - 1;
+		} else {
+			this.end = currProcess.getSize() + base; //calculates end based on process end
+		}
 	}
 	
 	//setters and getters
@@ -58,7 +62,7 @@ public class Partition {
 	}
 	
 	public Boolean isProcessFinished() {
-		if (this.currProcess.getTimeRemaining() == 0) {
+		if (this.currProcess.getTimeRemaining() <= 0) {
 			currProcess = null;
 			isFree = true;
 			return true;
@@ -76,6 +80,11 @@ public class Partition {
 	
 	public int getPartSize() {
 		return this.end - this.base;
+	}
+	
+	public void sanityCheck() {
+		System.out.println("Base: " + base + "\n"
+						 + "End: " + end);
 	}
 
 }
