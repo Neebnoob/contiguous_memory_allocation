@@ -57,10 +57,13 @@ public class Partition {
 		this.end = end;
 	}
 	
-	public void isProcessFinsihed() {
+	public Boolean isProcessFinished() {
 		if (this.currProcess.getTimeRemaining() == 0) {
 			currProcess = null;
 			isFree = true;
+			return true;
+		} else {
+			return false;
 		}
 	}
 	
@@ -69,6 +72,10 @@ public class Partition {
 			return currProcess.toString();
 		else
 			return "Free (" + (this.end - this.base) + " KB)";
+	}
+	
+	public int getPartSize() {
+		return this.end - this.base;
 	}
 
 }
