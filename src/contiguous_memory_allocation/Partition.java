@@ -63,5 +63,9 @@ public class Partition {
 			isFree = true;
 		}
 	}
+	
+	public String toString() {
+		return currProcess.toString() + " |";
+	}
 
 }
