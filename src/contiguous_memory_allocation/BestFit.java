@@ -6,5 +6,10 @@ public class BestFit extends ContigousMemoryAllocator{
 	public BestFit(int size, Process[] processesArray) {
 		super(size, processesArray);
 	}
+	
+	@Override
+	protected int pickInsert() {
+		return -1;
+	}
 
 }

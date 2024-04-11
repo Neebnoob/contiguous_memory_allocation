@@ -3,6 +3,8 @@ package contiguous_memory_allocation;
 import java.util.Scanner;
 
 public class ConsoleGUI {
+	
+	static Process[] processesArray;
 
 	public static void startUp() {
 
@@ -17,6 +19,7 @@ public class ConsoleGUI {
 		int maxProcSize = inputMaxProcSize(scan);
 		System.out.println("Please input the max time (ms) of each process");
 		int maxProcTime = inputMaxProcTime(scan);
+		scan.close();
 		
 		//Print out of all selected values from user
 		System.out.println("Choosen vales\n"
@@ -26,8 +29,14 @@ public class ConsoleGUI {
 						+  "Max Process Time: " + maxProcTime + " ms");
 		
 		//new code here
+		processesArray = Process.generateProcessArray(numProcesses, maxProcSize, maxProcTime);
 		
-		scan.close();
+		FirstFit firstFit = new FirstFit(maxMemorySize - 1, processesArray);
+		
+		BestFit bestFit = new BestFit(maxMemorySize - 1, processesArray);
+		
+		WorstFit worstFit = new WorstFit(maxMemorySize - 1, processesArray);
+		
 
 	}
 

@@ -6,5 +6,10 @@ public class WorstFit extends ContigousMemoryAllocator{
 	public WorstFit(int size, Process[] processesArray) {
 		super(size, processesArray);
 	}
+	
+	@Override
+	protected int pickInsert() {
+		return -1;
+	}
 
 }

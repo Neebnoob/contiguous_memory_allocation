@@ -6,5 +6,10 @@ public class FirstFit extends ContigousMemoryAllocator{
 	public FirstFit(int size, Process[] processesArray) {
 		super(size, processesArray);
 	}
+	
+	@Override
+	protected int pickInsert() {
+		return -1;
+	}
 
 }

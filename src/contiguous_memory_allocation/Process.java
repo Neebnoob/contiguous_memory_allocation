@@ -63,7 +63,7 @@ public class Process {
 	}
 	
 	// creates an array of processes with random values based on the max the user supplied
-    public Process[] generateProcessArray(int procCount, int maxSize, int maxTime) {
+    public static Process[] generateProcessArray(int procCount, int maxSize, int maxTime) {
         Process[] processArray = new Process[procCount];
         for (int i = 0; i < procCount; i++) {
             processArray[i] = new Process(Integer.toString(i), (int)(maxSize * Math.random()), (int)(maxTime * Math.random()));
@@ -78,6 +78,7 @@ public class Process {
         }
     }
 
+    //toString
     public String toString() {
         return String.format(this.getName() + " [ " + this.getTimeRemaining() + " ] " + " ( " + this.getSize()) + " ) ";
     }
