@@ -61,5 +61,21 @@ public class Process {
 	public void decrementTimeRemaining() {
 		this.timeRemaining--;
 	}
+	
+	// creates an array of processes with random values based on the max the user supplied
+    public Process[] generateProcessArray(int procCount, int maxSize, int maxTime) {
+        Process[] processArray = new Process[procCount];
+        for (int i = 0; i < procCount; i++) {
+            processArray[i] = new Process(Integer.toString(i), (int)(maxSize * Math.random()), (int)(maxTime * Math.random()));
+        }
+        return processArray;
+    }
+    
+    // takes the existing array and resets the remaining time value
+    public void resetProcessArray(Process[] processArray) {
+        for (int i = 0; i < processArray.length; i++) {
+            processArray[i].setTimeRemaining(processArray[i].getTime());
+        }
+    }
 
 }
