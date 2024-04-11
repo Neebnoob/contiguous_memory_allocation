@@ -9,20 +9,20 @@ public abstract class ContigousMemoryAllocator {
 	int size; // max size
 	List<Partition> memoryList; // list of all current partitions
 	Process[] processesArray; // array of processes
-	int holes;
 	int iterations;
 	int holeAvgPercent;
 	int currProcessIndex;
+	int totalHoles;
 
 	// constructor
 	public ContigousMemoryAllocator(int size, Process[] processesArray) {
 		this.size = size;
 		this.processesArray = processesArray;
 		memoryList.add(new Partition(0, size));
-		this.holes = 1;
 		this.currProcessIndex = 0;
 		this.iterations = 0;
 		this.holeAvgPercent = 0;
+		this.totalHoles = 1;
 	}
 
 	public void schedule() {
@@ -49,14 +49,26 @@ public abstract class ContigousMemoryAllocator {
 			}
 		}
 		
-		this.holes = 0;
+		int holes = 0;
 		int holeTotalSize = 0;
 		for (int i = 0; i < memoryList.size(); i++) {
 			if (memoryList.get(i).getIsFree()) {
 				holes++;
+				holeTotalSize+= memoryList.get(i).getPartSize();
 			}
 		}
-			
+		System.out.println(toString());
+		System.out.println("Holes: " + holes + "\n"
+						 + "Avg: " + (holeTotalSize/holes) + " KB\n"
+						 + "Total: " + holeTotalSize + " KB\n"
+						 + "Percent: " + (holeTotalSize/size) + "%\n"
+						 + "Cum Avg: " + cumAvg(holeTotalSize, holes) + "%");
+	}
+	
+	private int cumAvg(int holeTotalSize, int holes) {
+		holeAvgPercent = ((holeAvgPercent * (iterations - 1)) + holeTotalSize / totalHoles);
+		totalHoles += holes;
+		return holeAvgPercent;
 	}
 
 	private void timeDecrease() {
