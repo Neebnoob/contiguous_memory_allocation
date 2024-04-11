@@ -65,7 +65,10 @@ public class Partition {
 	}
 	
 	public String toString() {
-		return currProcess.toString() + " |";
+		if (currProcess != null)
+			return currProcess.toString();
+		else
+			return "Free (" + (this.end - this.base) + " KB)";
 	}
 
 }
