@@ -78,10 +78,13 @@ public class Partition {
 			return "Free (" + (this.end - this.base) + " KB)";
 	}
 	
+	//returns part size to help clean up code
 	public int getPartSize() {
 		return this.end - this.base;
 	}
 	
+	//sanity check
+	//Unused
 	public void sanityCheck() {
 		System.out.println("Base: " + base + "\n"
 						 + "End: " + end);

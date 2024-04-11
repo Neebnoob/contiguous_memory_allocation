@@ -8,6 +8,7 @@ public class ConsoleGUI {
 
 	public static void startUp() {
 
+		//console questions
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Welcome to Contiguous Memory Allocation\n"
 						 + "Enter -1 to use the default value\n"
@@ -36,23 +37,27 @@ public class ConsoleGUI {
 			System.out.println(processesArray[i].toString());
 		}
 		
-		
+		//first fit simulation call
 		FirstFit firstFit = new FirstFit(maxMemorySize - 1, processesArray);
 		while (!firstFit.isDone()) {
 			firstFit.schedule();
 		}
 		firstFit.toString();
 		
+		//resets all process remaining time values
 		Process.resetProcessArray(processesArray);
 		
+		//best fit simulation call
 		BestFit bestFit = new BestFit(maxMemorySize - 1, processesArray);
 		while (!bestFit.isDone()) {
 			bestFit.schedule();
 		}
 		bestFit.toString();
 		
+		//resets all process remaining time values
 		Process.resetProcessArray(processesArray);
 		
+		//worst fit simulation call
 		WorstFit worstFit = new WorstFit(maxMemorySize - 1, processesArray);
 		while (!worstFit.isDone()) {
 			worstFit.schedule();

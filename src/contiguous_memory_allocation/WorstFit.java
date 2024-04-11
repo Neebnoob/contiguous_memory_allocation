@@ -7,7 +7,7 @@ public class WorstFit extends ContigousMemoryAllocator{
 		super(size, processesArray);
 	}
 	
-	// Return the index of the biggest hole in processArray
+	// Return the index of the biggest hole in processArray that process can fit into
 	@Override
 	protected int pickInsert() {
 		int index = -1;
@@ -16,7 +16,9 @@ public class WorstFit extends ContigousMemoryAllocator{
 		for (int i = 0; i < memoryList.size(); i++){
 			Partition part = memoryList.get(i);
 			int partSize = memoryList.get(i).getEnd() - memoryList.get(i).getBase();
+			//checks if partition is free and has space for process
 			if (part.getIsFree() && partSize >= procSize){
+				//checks if partition would have more left over space than a different spot
 				if (sizeDif < partSize - procSize){
 					index = i;
 					sizeDif = partSize - procSize;
