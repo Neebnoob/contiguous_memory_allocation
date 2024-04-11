@@ -1,17 +1,44 @@
 package contiguous_memory_allocation;
 
 public class Partition {
-	// the representation of each memory partition
-	private int base; // base address
-	private int length; // partition size
-	private boolean bFree; // status: free or allocated
-	private String process; // assigned process if allocated
-
-	public Partition(int base, int length) {
+	
+	//variables
+	Process currProcess; //current process if not free
+	Boolean isFree; //shows if partition has process
+	int base; //starting memory value
+	int end; //ending memory value
+	
+	//constructor (free)
+	public Partition(int base, int end) {
+		this.currProcess = null;
+		this.isFree = true;
 		this.base = base;
-		this.length = length;
-		this.bFree = true; // free by default when creating
-		this.process = null; // unallocated to any process
+		this.end = end;
+	}
+	
+	//constructor occupied
+	public Partition(Process currProcess, int base) {
+		this.currProcess = currProcess;
+		this.isFree = false;
+		this.base = base;
+		this.end = currProcess.getSize() + base; //calculates end based on process end
+	}
+	
+	//setters and getters
+	public Process getCurrProcess() {
+		return currProcess;
+	}
+
+	public void setCurrProcess(Process currProcess) {
+		this.currProcess = currProcess;
+	}
+
+	public Boolean getIsFree() {
+		return isFree;
+	}
+
+	public void setIsFree(Boolean isFree) {
+		this.isFree = isFree;
 	}
 
 	public int getBase() {
@@ -22,33 +49,19 @@ public class Partition {
 		this.base = base;
 	}
 
-	public int getLength() {
-		return length;
+	public int getEnd() {
+		return end;
 	}
 
-	public void setLength(int length) {
-		this.length = length;
+	public void setEnd(int end) {
+		this.end = end;
 	}
-
-	public boolean isbFree() {
-		return bFree;
-	}
-
-	public void setbFree(boolean bFree) {
-		this.bFree = bFree;
-	}
-
-	public String getProcess() {
-		return process;
-	}
-
-	public void setProcess(String process) {
-		this.process = process;
-	}
-
-	@Override
-	public String toString() {
-		return "Partition [base=" + base + ", length=" + length + ", bFree=" + bFree + ", process=" + process + "]";
+	
+	public void isProcessFinsihed() {
+		if (this.currProcess.getTimeRemaining() == 0) {
+			currProcess = null;
+			isFree = true;
+		}
 	}
 
 }
