@@ -11,7 +11,7 @@ public abstract class ContigousMemoryAllocator {
 	List<Partition> memoryList; // list of all current partitions
 	Process[] processesArray; // array of processes
 	int iterations; //Used to calculate Hole size averages
-	int holeAvgPercent; //Keeps track of average hole percentage
+	int totalHoleAmtCount; //Keeps track of average hole percentage
 	int currProcessIndex; //next process to be added
 	int totalHoles; //total holes ever had
 
@@ -23,14 +23,15 @@ public abstract class ContigousMemoryAllocator {
 		memoryList.add(new Partition(0, size));
 		this.currProcessIndex = 0;
 		this.iterations = 0;
-		this.holeAvgPercent = 0;
-		this.totalHoles = 1;
+		this.totalHoleAmtCount = 0;
+		this.totalHoles = 0;
 	}
 
 	public void schedule() {
+		iterations++;
 		timeDecrease();
-		//uncomment to bug test
-		//System.out.println(toString());
+		//comment to bug test
+		System.out.println(toString());
 		Boolean flag = true;
 		//Pick next process loop to keep adding processes while there is space
 		while (flag && currProcessIndex < processesArray.length) {
@@ -59,26 +60,26 @@ public abstract class ContigousMemoryAllocator {
 		for (int i = 0; i < memoryList.size(); i++) {
 			if (memoryList.get(i).getIsFree()) {
 				holes++;
-				holeTotalSize+= memoryList.get(i).getPartSize();
+				holeTotalSize += memoryList.get(i).getPartSize();
 			}
 		}
 		//calls toString
 		System.out.println(toString());
 		//Prints hole stats in a neat way
 		System.out.println("Holes: " + holes + "\n"
-						 + "Avg: " + (holeTotalSize/holes) + " KB\n"
+						 + "Avg: " + (holeTotalSize / holes) + " KB\n"
 						 + "Total: " + holeTotalSize + " KB\n"
 						 //calculates current hole percentage
-						 + "Percent: " + (double)Math.round((holeTotalSize/(double)size) * 10000) / 100 + "%\n"
+						 + "Percent: " + (double)Math.round((holeTotalSize / (double)size) * 10000) / 100 + "%\n"
 						 + "Cum Avg: " + cumAvg(holeTotalSize, holes) + "%");
 	}
 	
 	//calculate Cumulative hole percentage
 	//BUG every other iteration is negative
 	private double cumAvg(int holeTotalSize, int holes) {
-		holeAvgPercent = ((holeAvgPercent * (iterations - 1)) + holeTotalSize / totalHoles);
-		totalHoles += holes;
-		return (double)Math.round((holeAvgPercent / (double)size) * 10000) / 100;
+		this.totalHoleAmtCount += holeTotalSize;
+		this.totalHoles += holes;
+		return (double)Math.round((totalHoleAmtCount / (double)(size * iterations)) * 10000) / 100;
 	}
 
 	//decrease the remaining time of every process by 1
