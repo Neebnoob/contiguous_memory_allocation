@@ -31,7 +31,7 @@ public abstract class ContigousMemoryAllocator {
 		iterations++;
 		timeDecrease();
 		//comment to bug test
-		System.out.println(toString());
+		//System.out.println(toString());
 		Boolean flag = true;
 		//Pick next process loop to keep adding processes while there is space
 		while (flag && currProcessIndex < processesArray.length) {

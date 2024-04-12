@@ -68,105 +68,101 @@ public class ConsoleGUI {
 
 	/// Asks the user to input a number greater than zero to be the max memory size
 	/// Throws an error for any value 0 or less and for any non number value
-	// BUG - when a non int is input gets infinite loop of "Please enter a number"
 	private static int inputMaxMemorySize(Scanner scan) {
-		Boolean flag = true;
-		int maxMemorySize;
-		while (flag) {
-			try {
-				maxMemorySize = scan.nextInt();
-				if (maxMemorySize == -1)
+		Integer maxMemorySize = null;
+	    do {
+	        String input = scan.nextLine();
+	        try {
+	        	maxMemorySize = Integer.parseInt(input);
+	        	if (maxMemorySize == -1)
 					return 1024;
 				else if (maxMemorySize <= 0)
 					throw new IllegalValueException();
 				else
 					return maxMemorySize;
-				//flag = false;
-			} catch (IllegalValueException ive) {
+	        } catch (IllegalValueException ive) {
 				System.out.println("Please enter a value greater than 0");
-			} catch (Exception e) {
-				System.out.println("Please enter a number");
-			}
-		}
-		return -1;
+			} catch(NumberFormatException e) {
+	            System.out.println("Please enter a number"); 
+	        }
+	    } while(maxMemorySize == null);
+	    
+	    return -1;
 	}
 
 	/// Asks the user to input a number greater than zero to be the number of
 	/// processes they want
 	// Throws an error for any value 0 or less and for any non number value
-	// BUG - when a non int is input gets infinite loop of "Please enter a number"
 	private static int inputNumProcesses(Scanner scan) {
-		Boolean flag = true;
-		int numProcesses;
-		while (flag) {
-			try {
-				numProcesses = scan.nextInt();
-				if (numProcesses == -1)
+		Integer numProcesses = null;
+	    do {
+	        String input = scan.nextLine();
+	        try {
+	        	numProcesses = Integer.parseInt(input);
+	        	if (numProcesses == -1)
 					return 10;
 				else if (numProcesses <= 0)
 					throw new IllegalValueException();
 				else
 					return numProcesses;
-				//flag = false;
-			} catch (IllegalValueException ive) {
+	        } catch (IllegalValueException ive) {
 				System.out.println("Please enter a value greater than 0");
-			} catch (Exception e) {
-				System.out.println("Please enter a number");
-			}
-		}
-		return -1;
+			} catch(NumberFormatException e) {
+	            System.out.println("Please enter a number"); 
+	        }
+	    } while(numProcesses == null);
+	    
+	    return -1;
 	}
 
 	/// Asks the user to input a number greater than zero to be the max size they
 	/// want a process to be
 	// Throws an error for any value 0 or less and for any non number value
-	// BUG - when a non int is input gets infinite loop of "Please enter a number"
 	private static int inputMaxProcSize(Scanner scan) {
-		Boolean flag = true;
-		int maxProcSize;
-		while (flag) {
-			try {
-				maxProcSize = scan.nextInt();
-				if (maxProcSize == -1)
+		Integer maxProcSize = null;
+	    do {
+	        String input = scan.nextLine();
+	        try {
+	        	maxProcSize = Integer.parseInt(input);
+	        	if (maxProcSize == -1)
 					return 256;
 				else if (maxProcSize <= 0)
 					throw new IllegalValueException();
 				else
 					return maxProcSize;
-				//flag = false;
-			} catch (IllegalValueException ive) {
+	        } catch (IllegalValueException ive) {
 				System.out.println("Please enter a value greater than 0");
-			} catch (Exception e) {
-				System.out.println("Please enter a number");
-			}
-		}
-		return -1;
+			} catch(NumberFormatException e) {
+	            System.out.println("Please enter a number"); 
+	        }
+	    } while(maxProcSize == null);
+	    
+	    return -1;
 	}
 
 	/// Asks the user to input a number greater than zero to be the max time
 	/// want a process to last for
 	// Throws an error for any value 0 or less and for any non number value
-	// BUG - when a non int is input gets infinite loop of "Please enter a number"
 	private static int inputMaxProcTime(Scanner scan) {
-		Boolean flag = true;
-		int maxProcTime;
-		while (flag) {
-			try {
-				maxProcTime = scan.nextInt();
-				if (maxProcTime == -1)
+		Integer maxProcTime = null;
+	    do {
+	        String input = scan.nextLine();
+	        try {
+	        	maxProcTime = Integer.parseInt(input);
+	        	if (maxProcTime == -1)
 					return 10000;
 				else if (maxProcTime <= 0)
 					throw new IllegalValueException();
 				else
 					return maxProcTime;
-				//flag = false;
-			} catch (IllegalValueException ive) {
+	        } catch (IllegalValueException ive) {
 				System.out.println("Please enter a value greater than 0");
-			} catch (Exception e) {
-				System.out.println("Please enter a number");
-			}
-		}
-		return -1;
+			} catch(NumberFormatException e) {
+	            System.out.println("Please enter a number"); 
+	        }
+	    } while(maxProcTime == null);
+	    
+	    return -1;
 	}
 
 }
