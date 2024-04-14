@@ -37,6 +37,9 @@ public class ConsoleGUI {
 			System.out.println(processesArray[i].toString());
 		}
 		
+		System.out.println("\n" + "##################################" + "\n");
+		System.out.println("-------------First Fit------------" + "\n");
+		
 		//first fit simulation call
 		FirstFit firstFit = new FirstFit(maxMemorySize - 1, processesArray);
 		while (!firstFit.isDone()) {
@@ -46,6 +49,9 @@ public class ConsoleGUI {
 		
 		//resets all process remaining time values
 		Process.resetProcessArray(processesArray);
+
+		System.out.println("\n" + "##################################" + "\n");
+		System.out.println("-------------Best Fit-------------" + "\n");
 		
 		//best fit simulation call
 		BestFit bestFit = new BestFit(maxMemorySize - 1, processesArray);
@@ -56,6 +62,9 @@ public class ConsoleGUI {
 		
 		//resets all process remaining time values
 		Process.resetProcessArray(processesArray);
+
+		System.out.println("\n" + "##################################" + "\n");
+		System.out.println("-------------Worst Fit------------" + "\n");
 		
 		//worst fit simulation call
 		WorstFit worstFit = new WorstFit(maxMemorySize - 1, processesArray);
